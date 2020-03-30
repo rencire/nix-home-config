@@ -3,7 +3,7 @@ Example of using nix for managing user environment packages
 
 Uses:
 - [niv][https://github.com/nmattia/niv] to manage dependencies for nix projects.
-- [NUR][https://github.com/nix-community/NUR] to pull in user packages not reviewed by nixpkgs members.
+- [NUR][https://github.com/nix-community/NUR] to pull in extra user packages that are not part of the nixpkgs repo.
 
 
 # Usage
@@ -35,37 +35,7 @@ The only way to amuse some people is to slip and fall on an icy pavement.
 ## Specifying config for each package
 This depends on how each package reads their configuration.
 
-e.g. for neovim, we can simply specify the configuration via `override`
-```nix
-# common.nix
-with import ./nix {};
-let 
-  myneovim = nur.rencire.neovim.override {
-    configure = {
-      customRC = ''
-        "General vimrc
-	set number 
-      '';
-      packages.main = with vimPlugins; {
-        start = [
-          {
-            plugin = surround;
-            vimrc = ''
-              "Insert vimrc for surround plugin here
-            '';
-          }
-        ];
-      };
-    };
-  }
-in 
-  [
-    myneovim
-  ]
-
-```
-
-
+e.g. for neovim, we can simply specify the configuration via `override`. See `common.nix`.
 
 
 ## Folder structure
@@ -79,6 +49,7 @@ in
 - Home Manager (personally haven't used it). However, it seems like a heavyweight solution versus just specifying the config for each package individually.
 
 
-
+## TODO
+- [] add common patterns for importing (e.g. nur, directly from repo from niv, from package repos similar to pypi npm etc.)
 
 
